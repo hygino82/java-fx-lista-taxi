@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="426.0" prefWidth="513.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ViewController">
+   <children>
+      <GridPane layoutX="73.0" layoutY="110.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ChoiceBox fx:id="cbEstrada" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="txtInicio" GridPane.rowIndex="1" />
+            <TextField fx:id="txtFim" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="INICIO" />
+            <Label text="FIM" GridPane.columnIndex="1" />
+            <Label text="ESTRADA" GridPane.columnIndex="2" />
+         </children>
+      </GridPane>
+      <Button fx:id="btAdicionar" layoutX="385.0" layoutY="115.0" mnemonicParsing="false" onAction="#btAdicionarAction" text="Adicionar" />
+      <Button fx:id="btListar" layoutX="385.0" layoutY="145.0" mnemonicParsing="false" onAction="#btListarAction" prefHeight="25.0" prefWidth="67.0" text="Listar" />
+      <TextArea fx:id="txtListagem" layoutX="73.0" layoutY="200.0" prefHeight="200.0" prefWidth="382.0" />
+      <Label layoutX="81.0" layoutY="43.0" text="GERENCIADOR DE CORRIDA">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
