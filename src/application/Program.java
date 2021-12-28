@@ -18,6 +18,10 @@ public class Program extends Application {
         try {
             Parent parent = FXMLLoader.load(getClass().getResource("/gui/View.fxml"));
             Scene scene = new Scene(parent);
+            
+            String css = this.getClass().getResource("/gui/application.css").toExternalForm();
+            scene.getStylesheets().add(css);
+
             stage.setScene(scene);
             stage.show();
         } 

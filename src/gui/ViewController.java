@@ -6,8 +6,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -23,6 +27,7 @@ import javafx.scene.control.TextField;
 import model.Corrida;
 
 public class ViewController implements Initializable {
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     private Double valorTotal = 0.0;
     private List<Corrida> minhaLista = new ArrayList<>();
@@ -67,18 +72,47 @@ public class ViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         cbLocal.getItems().addAll(locais);
         cbLocal.setOnAction(this::getLocal);
+
+        btCarregarAction();//carrega lista no início
     }
 
-    public String getLocal(ActionEvent event) {
-        String meuLocal = cbLocal.getValue();
-        return meuLocal;
+    public void getLocal(ActionEvent event) {
+        String cidade = cbLocal.getValue();
+        switch (cidade) {
+            case "Coronel Vivida":
+                txtValor.setText("60");
+                break;
+
+            case "Itapejara do Oeste":
+                txtValor.setText("45");
+                break;
+
+            case "Pato Branco":
+                txtValor.setText("150");
+                break;
+
+            case "Francisco Beltrão":
+                txtValor.setText("160");
+                break;
+
+            case "São João":
+                txtValor.setText("45");
+                break;
+
+            default:
+                txtValor.setText("");
+        }
     }
 
     @FXML
     public void btAdicionaAction() {
         try {
             String nome = txtNome.getText().toUpperCase();
-            LocalDate data = dpData.getValue();
+            LocalDate myDate = dpData.getValue();
+
+            String myFormattedDate = myDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            Date data = sdf.parse(myFormattedDate);
+
             String local = cbLocal.getValue();
             Double valor = Double.parseDouble(txtValor.getText());
             Corrida novaCorrida = new Corrida(nome, data, local, valor);
@@ -114,22 +148,40 @@ public class ViewController implements Initializable {
 
     @FXML
     public void btCarregarAction() {
-        String path = "C:\\temp\\out.txt";
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        String path = "C:\\temp\\out.csv";
+
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line = br.readLine();
             while (line != null) {
+
+                String[] campos = line.split(",");
+                String nome = campos[0];
+                Date dataCorrida = sdf.parse(campos[1]);
+                String local = campos[2];
+                Double valor = Double.parseDouble(campos[3]);
+                Corrida corrida = new Corrida(nome, dataCorrida, local, valor);
+                minhaLista.add(corrida);
+
+                valorTotal += valor;
+                lbTotal.setText("R$" + String.format("%.2f", valorTotal));
+
                 System.out.println(line);
                 line = br.readLine();
             }
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
+        } catch (ParseException e) {
+            txtLista.clear();
+            txtLista.appendText("Formato inválido");
         }
     }
 
     @FXML
     public void btSalvarAction() {
 
-        String path = "C:\\temp\\out.txt";
+        String path = "C:\\temp\\out.csv";
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             for (Corrida line : minhaLista) {

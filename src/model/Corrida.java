@@ -1,19 +1,20 @@
 package model;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Corrida {
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     private String nomeCliente;
-    private LocalDate dataCorrida;
+    private Date dataCorrida;
     private String localCorrida;
     private Double valorCorrida;
 
     public Corrida() {
     }
 
-    public Corrida(String nomeCliente, LocalDate dataCorrida, String localCorrida, Double valorCorrida) {
+    public Corrida(String nomeCliente, Date dataCorrida, String localCorrida, Double valorCorrida) {
         this.nomeCliente = nomeCliente;
         this.dataCorrida = dataCorrida;
         this.localCorrida = localCorrida;
@@ -28,11 +29,11 @@ public class Corrida {
         this.nomeCliente = nomeCliente;
     }
 
-    public LocalDate getDataCorrida() {
+    public Date getDataCorrida() {
         return dataCorrida;
     }
 
-    public void setDataCorrida(LocalDate dataCorrida) {
+    public void setDataCorrida(Date dataCorrida) {
         this.dataCorrida = dataCorrida;
     }
 
@@ -56,7 +57,9 @@ public class Corrida {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Nome: " + nomeCliente + "\n");
-        sb.append("Data: " + dataCorrida.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n");
+        sb.append("Data: " + sdf.format(dataCorrida) + "\n");
+        // sb.append("Data: " +
+        // dataCorrida.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n");
         sb.append("Local: " + localCorrida + "\n");
         sb.append("Valor: R$" + String.format("%.2f", valorCorrida));
         return sb.toString();
@@ -64,7 +67,8 @@ public class Corrida {
 
     public String csvFormato() {
         return nomeCliente + ","
-                + dataCorrida.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ","
+        // + dataCorrida.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                + sdf.format(dataCorrida) + ","
                 + localCorrida + "," + valorCorrida;
     }
 }
