@@ -61,4 +61,10 @@ public class Corrida {
         sb.append("Valor: R$" + String.format("%.2f", valorCorrida));
         return sb.toString();
     }
+
+    public String csvFormato() {
+        return nomeCliente + ","
+                + dataCorrida.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ","
+                + localCorrida + "," + valorCorrida;
+    }
 }
